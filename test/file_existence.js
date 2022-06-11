@@ -16,30 +16,19 @@ const expectedFilesInDistDir = [
   '.editorconfig',
   '.gitattributes',
   '.gitignore',
-  '.htaccess',
   '404.html',
   'package.json',
-  'browserconfig.xml',
+  'webpack.config.js',
 
   'css/', // for directories, a `/` character
   // should be included at the end
   'css/normalize.css',
   'css/style.css',
 
-  'doc/',
-  'doc/TOC.md',
-  'doc/css.md',
-  'doc/extend.md',
-  'doc/faq.md',
-  'doc/html.md',
-  'doc/js.md',
-  'doc/misc.md',
-  'doc/usage.md',
-
   'favicon.ico',
-  'humans.txt',
 
   'icon.png',
+  'icon.svg',
 
   'img/',
   'img/.gitignore',
