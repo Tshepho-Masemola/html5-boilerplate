@@ -7,5 +7,6 @@ dist
 #Ignore file
 /credentials.py
 
+
 #Ignore folder
 text/*.txt  
