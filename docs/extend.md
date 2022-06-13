@@ -1,23 +1,35 @@
 [HTML5 Boilerplate homepage](https://html5boilerplate.com) | [Documentation
 table of contents](TOC.md)
 
-# Extend and customise HTML5 Boilerplate
+# Extend and customize HTML5 Boilerplate
 
 Here is some useful advice for how you can make your project with HTML5
 Boilerplate even better. We don't want to include it all by default, as not
 everything fits with everyone's needs.
 
+* [Server Configuration](#server-configuration)
 * [App Stores](#app-stores)
 * [DNS prefetching](#dns-prefetching)
-* [Google Universal Analytics](#google-universal-analytics)
-* [Internet Explorer](#internet-explorer)
 * [Miscellaneous](#miscellaneous)
 * [News Feeds](#news-feeds)
 * [Search](#search)
 * [Social Networks](#social-networks)
 * [URLs](#urls)
 * [Web Apps](#web-apps)
+* [humans.txt](#humanstxt)
 * [security.txt](#security.txt)
+
+
+## Server Configuration
+
+We no longer include a [`.htaccess`](#htaccess) file for the [Apache HTTP
+server](https://httpd.apache.org/docs/) in HTML5 Boilerplate by default, however if you are
+using a web server, then we encourage you to checkout out the [server configuration](https://github.com/h5bp/server-configs)
+that corresponds to your web server and environment.
+
+These repos offer a collection of configuration snippets that can help your server improve the
+website's performance and security, while also ensuring that resources are served with the
+correct content-type and are accessible, if needed, even cross-domain.
 
 ## App Stores
 
@@ -25,7 +37,7 @@ everything fits with everyone's needs.
 
 Stop bothering everyone with gross modals advertising your entry in the App
 Store. Including the following [meta
-tag](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html)
+tag](https://developer.apple.com/documentation/webkit/promoting_apps_with_smart_app_banners)
 will unobtrusively give the user the option to download your iOS app, or open it
 with some data about the user's current state on the website.
 
@@ -72,198 +84,12 @@ Charset](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#attr-cha
 element (which should go right at the top of the `head`), so the browser can act
 on them ASAP.
 
-#### Common Prefetch Links
-
-Amazon S3:
-
-```html
-<link rel="dns-prefetch" href="//s3.amazonaws.com">
-```
-
-Google APIs:
-
-```html
-<link rel="dns-prefetch" href="https://ajax.googleapis.com">
-```
-
-Microsoft Ajax Content Delivery Network:
-
-```html
-<link rel="dns-prefetch" href="//ajax.microsoft.com">
-<link rel="dns-prefetch" href="//ajax.aspnetcdn.com">
-```
 
 ### Further reading about DNS prefetching
 
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control
 * https://dev.chromium.org/developers/design-documents/dns-prefetching
-* https://docs.microsoft.com/en-us/archive/blogs/ie/internet-explorer-9-network-performance-improvements
 
-## Google Universal Analytics
-
-### More tracking settings
-
-The [optimized Google Universal Analytics
-snippet](https://mathiasbynens.be/notes/async-analytics-snippet#universal-analytics)
-included with HTML5 Boilerplate includes something like this:
-
-```js
-ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
-```
-
-To customize further, see Google's [Advanced
-Setup](https://developers.google.com/analytics/devguides/collection/analyticsjs/),
-[Pageview](https://developers.google.com/analytics/devguides/collection/analyticsjs/pages),
-and
-[Event](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
-Docs.
-
-### Track JavaScript errors in Google Analytics
-
-Add this function after `ga` is defined:
-
-```js
-(function(window){
-    var undefined,
-        link = function (href) {
-            var a = window.document.createElement('a');
-            a.href = href;
-            return a;
-        };
-    window.onerror = function (message, file, line, column) {
-        var host = link(file).hostname;
-        ga('send', {
-          'hitType': 'event',
-          'eventCategory': (host == window.location.hostname || host == undefined || host == '' ? '' : 'external ') + 'error',
-          'eventAction': message,
-          'eventLabel': (file + ' LINE: ' + line + (column ? ' COLUMN: ' + column : '')).trim(),
-          'nonInteraction': 1
-        });
-    };
-}(window));
-```
-
-### Track page scroll
-
-Add this function after `ga` is defined. Note, the following snippet requires jQuery.
-
-```js
-$(function(){
-    var isDuplicateScrollEvent,
-        scrollTimeStart = new Date,
-        $window = $(window),
-        $document = $(document),
-        scrollPercent;
-
-    $window.scroll(function() {
-        scrollPercent = Math.round(100 * ($window.height() + $window.scrollTop())/$document.height());
-        if (scrollPercent > 90 && !isDuplicateScrollEvent) { //page scrolled to 90%
-            isDuplicateScrollEvent = 1;
-            ga('send', 'event', 'scroll',
-                'Window: ' + $window.height() + 'px; Document: ' + $document.height() + 'px; Time: ' + Math.round((new Date - scrollTimeStart )/1000,1) + 's'
-            );
-        }
-    });
-});
-```
-
-## Internet Explorer
-
-### IE Pinned Sites
-
-Enabling your application for pinning will allow IE users to add it to their
-Windows Taskbar and Start Menu. This comes with a range of new tools that you
-can easily configure with the elements below. See more [documentation on IE
-Pinned
-Sites](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/samples/gg491731(v%3dvs.85)).
-
-### Name the Pinned Site for Windows
-
-Without this rule, Windows will use the page title as the name for your
-application.
-
-```html
-<meta name="application-name" content="Sample Title">
-```
-
-### Give your Pinned Site a tooltip
-
-You know — a tooltip. A little textbox that appears when the user holds their
-mouse over your Pinned Site's icon.
-
-```html
-<meta name="msapplication-tooltip" content="A description of what this site does.">
-```
-
-### Set a default page for your Pinned Site
-
-If the site should go to a specific URL when it is pinned (such as the
-homepage), enter it here. One idea is to send it to a special URL so you can
-track the number of pinned users, like so:
-`https://www.example.com/index.html?pinned=true`
-
-```html
-<meta name="msapplication-starturl" content="https://www.example.com/index.html?pinned=true">
-```
-
-### Recolor IE's controls manually for a Pinned Site
-
-IE will automatically use the overall color of your Pinned Site's favicon to
-shade its browser buttons. UNLESS you give it another color here. Only use named
-colors (`red`) or hex colors (`#ff0000`).
-
-```html
-<meta name="msapplication-navbutton-color" content="#ff0000">
-```
-
-### Manually set the window size of a Pinned Site
-
-If the site should open at a certain window size once pinned, you can specify
-the dimensions here. It only supports static pixel dimensions. 800x600 minimum.
-
-```html
-<meta name="msapplication-window" content="width=800;height=600">
-```
-
-### Jump List "Tasks" for Pinned Sites
-
-Add Jump List Tasks that will appear when the Pinned Site's icon gets a
-right-click. Each Task goes to the specified URL, and gets its own mini icon
-(essentially a favicon, a 16x16 .ICO). You can add as many of these as you need.
-
-```html
-<meta name="msapplication-task" content="name=Task 1;action-uri=http://host/Page1.html;icon-uri=http://host/icon1.ico">
-<meta name="msapplication-task" content="name=Task 2;action-uri=http://microsoft.com/Page2.html;icon-uri=http://host/icon2.ico">
-```
-
-### (Windows 8) High quality visuals for Pinned Sites
-
-Windows 8 adds the ability for you to provide a PNG tile image and specify the
-tile's background color. [Full details on the IE
-blog](https://docs.microsoft.com/en-us/archive/blogs/ie/high-quality-visuals-for-pinned-sites-in-windows-8).
-
-* Create a 144x144 image of your site icon, filling all of the canvas, and using
-  a transparent background.
-* Save this image as a 32-bit PNG and optimize it without reducing colour-depth.
-  It can be named whatever you want (e.g. `metro-tile.png`).
-* To reference the tile and its color, add the HTML `meta` elements described in
-  the IE Blog post.
-
-### (Windows 8) Badges for Pinned Sites
-
-IE will poll an XML document for badge information to display on your app's tile
-in the Start screen. The user will be able to receive these badge updates even
-when your app isn't actively running. The badge's value can be a number, or one
-of a predefined list of glyphs.
-
-* [Tutorial on IEBlog with link to badge XML
-schema](https://docs.microsoft.com/en-us/archive/blogs/ie/pinned-sites-in-windows-8)
-* [Available badge
-  values](https://docs.microsoft.com/en-us/uwp/schemas/tiles/badgeschema/element-badge)
-
-```html
-<meta name="msapplication-badge" value="frequency=NUMBER_IN_MINUTES;polling-uri=https://www.example.com/path/to/file.xml">
-```
 
 ## Search
 
@@ -293,12 +119,12 @@ value your sanity. This is an HTML-centric way of achieving that.
 
 **_WARNING:_** DO NOT INCLUDE ON PAGES THAT SHOULD APPEAR IN SEARCH ENGINES.
 
-### Firefox and IE Search Plugins
+### Search Plugins
 
 Sites with in-site search functionality should be strongly considered for a
 browser search plugin. A "search plugin" is an XML file which defines how your
 plugin behaves in the browser. [How to make a browser search
-plugin](https://www.google.com/search?ie=UTF-8&q=how+to+make+browser+search+plugin).
+plugin](https://developer.mozilla.org/en-US/docs/Web/OpenSearch).
 
 ```html
 <link rel="search" title="" type="application/opensearchdescription+xml" href="">
@@ -458,30 +284,6 @@ the cleaner, more accurate `https://www.example.com/cart.html`.
 <link rel="canonical" href="">
 ```
 
-### Separate mobile URLs
-
-If you use separate URLs for desktop and mobile users, you should consider
-helping search engine algorithms better understand the configuration on your web
-site.
-
-This can be done by adding the following annotations in your HTML pages:
-
-* on the desktop page, add the `link rel="alternate"` tag pointing to the
-  corresponding mobile URL, e.g.:
-
-  `<link rel="alternate" media="only screen and (max-width: 640px)"
-  href="https://m.example.com/page.html" >`
-
-* on the mobile page, add the `link rel="canonical"` tag pointing to the
-  corresponding desktop URL, e.g.:
-
-  `<link rel="canonical" href="https://www.example.com/page.html">`
-
-For more information please see:
-
-* https://developers.google.com/search/mobile-sites/mobile-seo/separate-urls
-
-
 ## Web Apps
 
 There are a couple of meta tags that provide information about a web app when
@@ -538,22 +340,6 @@ for an iPhone:
 ```
 
 
-### Chrome Mobile web apps
-
-Chrome Mobile has a specific meta tag for making apps [installable to the
-homescreen](https://developer.chrome.com/multidevice/android/installtohomescreen)
-which tries to be a more generic replacement to Apple's proprietary meta tag:
-
-```html
-<meta name="mobile-web-app-capable" content="yes">
-```
-
-Same applies to the touch icons:
-
-```html
-<link rel="icon" sizes="192x192" href="highres-icon.png">
-```
-
 ### Theme Color
 
 You can add the [`theme-color` meta
@@ -572,8 +358,14 @@ Currently, the `theme-color` meta extension is supported by [Chrome 39+ for
 Android
 Lollipop](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android).
 
+### humans.txt
 
-## security.txt
+You can include a `humans.txt` file in the root of your site which can be used
+to provide information about people involved with the website.
+
+For more information about `humans.txt`, please see: https://humanstxt.org/
+
+### security.txt
 
 When security risks in web services are discovered by users they often lack the
 channels to disclose them properly. As a result, security issues may be left

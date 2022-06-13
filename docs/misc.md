@@ -7,8 +7,6 @@ table of contents](TOC.md)
 * [.editorconfig](#editorconfig)
 * [Server Configuration](#server-configuration)
 * [robots.txt](#robotstxt)
-* [humans.txt](#humanstxt)
-* [browserconfig.xml](#browserconfigxml)
 * [package.json](#packagejson)
 
 --
@@ -58,59 +56,6 @@ access to `.editorconfig` files, as they can disclose sensitive information!
 For more details, please refer to the [EditorConfig
 project](https://editorconfig.org/).
 
-## Server Configuration
-
-H5BP includes a [`.htaccess`](#htaccess) file for the [Apache HTTP
-server](https://httpd.apache.org/docs/). If you are not using Apache
-as your web server, then you are encouraged to download a
-[server configuration](https://github.com/h5bp/server-configs) that
-corresponds to your web server and environment.
-
-A `.htaccess` (hypertext access) file is an [Apache HTTP server
-configuration file](https://github.com/h5bp/server-configs-apache).
-The `.htaccess` file is mostly used for:
-
-* Rewriting URLs
-* Controlling cache
-* Authentication
-* Server-side includes
-* Redirects
-* Gzipping
-
-If you have access to the main server configuration file (usually called
-`httpd.conf`), you should add the logic from the `.htaccess` file in, for
-example, a `<Directory>` section in the main configuration file. This is usually
-the recommended way, as using .htaccess files slows down Apache!
-
-To enable Apache modules locally, please see [the Apache modules documentation](https://github.com/h5bp/server-configs-apache#enable-apache-httpd-modules)
-
-In the repo the `.htaccess` is used for:
-
-* Allowing cross-origin access to web fonts
-* CORS header for images when browsers request it
-* Enable `404.html` as 404 error document
-* Making the website experience better for IE users better
-* Media UTF-8 as character encoding for `text/html` and `text/plain`
-* Enabling the rewrite URLs engine
-* Forcing or removing the `www.` at the begin of a URL
-* It blocks access to directories without a default document
-* It blocks access to files that can expose sensitive information.
-* It reduces MIME type security risks
-* It forces compressing (gzipping)
-* It tells the browser whether they should request a specific file from the
-  server or whether they should grab it from the browser's cache
-
-When using `.htaccess` we recommend reading all inline comments (the rules after
-a `#`) in the file once. There is a bunch of optional stuff in it.
-
-If you want to know more about the `.htaccess` file check out the
-[Apache HTTP server docs](https://httpd.apache.org/docs/) or more
-specifically the [htaccess
-section](https://httpd.apache.org/docs/current/howto/htaccess.html).
-
-Notice that the original repo for the `.htaccess` file is [this
-one](https://github.com/h5bp/server-configs-apache).
-
 ## robots.txt
 
 The `robots.txt` file is used to give instructions to web robots on what can
@@ -137,37 +82,6 @@ For more information about `robots.txt`, please see:
 * [robotstxt.org](https://www.robotstxt.org/)
 * [How Google handles the `robots.txt` file](https://developers.google.com/search/reference/robots_txt)
 
-## humans.txt
-
-The `humans.txt` file is used to provide information about people involved with
-the website.
-
-The provided file contains three sections:
-
-* `TEAM` - this is intended to list the group of people responsible for the website
-* `THANKS` - this is intended to list the group of people that have contributed
-  to the website
-* `TECHNOLOGY COLOPHON` - the section lists technologies used to make the website
-
-For more information about `humans.txt`, please see: http://humanstxt.org/
-
-## browserconfig.xml
-
-The `browserconfig.xml` file is used to customize the tile displayed when users
-pin your site to the Windows 8.1 start screen. In there you can define custom
-tile colors, custom images or even [live tiles](https://docs.microsoft.com/previous-versions/windows/internet-explorer/ie-developer/samples/dn455106(v=vs.85)).
-
-By default, the file points to 2 placeholder tile images:
-
-* `tile.png` (558x558px): used for `Small`, `Medium` and `Large` tiles.
-  This image resizes automatically when necessary.
-* `tile-wide.png` (558x270px): user for `Wide` tiles.
-
-Notice that IE11 uses the same images when adding a site to the `favorites`.
-
-For more in-depth information about the `browserconfig.xml` file, please
-see [MSDN](https://docs.microsoft.com/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426(v=vs.85)).
-
 ## package.json
 
 `package.json` is used to define attributes of your site or application for
@@ -184,13 +98,11 @@ if you're interested. The fields we provide are as follows:
   node environment. There are many [built-in keys](https://docs.npmjs.com/misc/scripts)
   related to the package lifecycle that node understands automatically. You can
   also define custom scripts for use with your application development. We
-  provide three custom scripts that work with Parcel to get you up and running
+  provide three custom scripts that work with WebPack to get you up and running
   quickly with a bundler for your assets and a simple development server.
 
-  * `start` builds your site and starts a server
-  * `build` builds your `index.html` using Parcel
-  * `dev` serves your `index.html` with a simple development server
-
+  * `start` serves your `index.html` with a simple development server
+  
 * `keywords` - an array of keywords used to discover your app in the npm
   registry
 * `author` - defines the author of a package. There is also an alternative
@@ -199,5 +111,4 @@ if you're interested. The fields we provide are as follows:
 * `license` - the license for your application. Must conform to
   [specific rules](https://docs.npmjs.com/files/package.json#license)
 * `devDependencies` - development dependencies for your package. In our case
-  it's a single dependency, Parcel, which we use to bundle files and run a
-  simple web server.
+ we have several dependencies used by WebPack, which we use as a simple development server.
